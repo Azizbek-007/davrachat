@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import UpdateUserDto from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -43,7 +43,16 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async search(username: string) {
+    const user = await this.userRepository.find({
+      where: {
+        username: Like(username + '%')
+      },
+      take: 5
+    });
+    if(user.length == 0) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 }
