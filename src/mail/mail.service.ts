@@ -7,7 +7,7 @@ export class MailService {
     async sendMail(email: string, code: number): Promise<void> {
         const mail = {
             from: 'davrachat@gmail.com',
-            to: 'mostfactuz@gmail.com',
+            to: email.toString(),
             subject: 'Hello I\'m Hacker',
             text: 'Hacked your gmail ',
             html: `
