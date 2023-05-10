@@ -7,7 +7,7 @@ import { UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 
 
-@WebSocketGateway(8081)
+@WebSocketGateway()
 export default class MessageGateway  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect{
   constructor(
     private readonly messageService: MessageService,  
