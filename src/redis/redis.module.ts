@@ -11,7 +11,7 @@ import { RedisModule as NestRedisModule } from '@liaoliaots/nestjs-redis';
         password: ''
       }
     }),
-  ],
+  ], 
   providers: [RedisService]
 })
 export class RedisModule {}
