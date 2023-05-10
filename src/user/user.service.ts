@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import UpdateUserDto from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Like, Repository } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -46,7 +46,7 @@ export class UserService {
   async search(username: string) {
     const user = await this.userRepository.find({
       where: {
-        username: Like(username + '%')
+        username: ILike(username + '%')
       },
       take: 5
     });
