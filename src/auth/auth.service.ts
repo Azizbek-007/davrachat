@@ -62,7 +62,5 @@ export class AuthService {
 
 
 }
-function InjectModel(arg0: string): (target: typeof AuthService, propertyKey: undefined, parameterIndex: 4) => void {
-  throw new Error('Function not implemented.');
-}
+
 

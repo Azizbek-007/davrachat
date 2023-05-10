@@ -27,6 +27,9 @@ export class User extends BaseEntity {
     @OneToMany(() => PrivateMessage, msg => msg.receiver)
     receivedMessages: PrivateMessage
 
+    @Column({ type: 'boolean', default: true })
+    status: boolean;
+
     @CreateDateColumn()
     createdAt: Date;
 }

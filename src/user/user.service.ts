@@ -25,12 +25,8 @@ export class UserService {
     return await new_user.save();
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async UserStatus(user_id: number, status: boolean) {
+    await this.userRepository.update(user_id, { status });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -54,5 +50,9 @@ export class UserService {
       throw new NotFoundException();
     }
     return user;
+  }
+
+  async getUserById (id: number) {
+    return await this.userRepository.findOneBy({ id });
   }
 }
