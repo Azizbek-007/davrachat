@@ -11,13 +11,13 @@ export class MessageService {
     private readonly privateMessageRepository: Repository<PrivateMessage>
   ) {}
 
-  async findAll(query: QueryFindMessageDto) {
+  async findAll(query: QueryFindMessageDto, senderId: number) {
     const take = query['take'] || 30
     const skip = query['skip'] || 0
 
     const [result, total] = await this.privateMessageRepository.findAndCount(
         {
-          where: { senderId: query['senderId'], receiverId: query['receiverId'] },
+          where: { senderId, receiverId: query['receiverId'] },
           order: { id: "DESC" },
           take: take,
           skip: skip

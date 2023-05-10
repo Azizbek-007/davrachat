@@ -1,17 +1,14 @@
-import { IsNumber, IsOptional } from "class-validator";
+import { IsNumberString, IsOptional } from "class-validator";
 
 export class QueryFindMessageDto {
     @IsOptional()
-    @IsNumber()
+    @IsNumberString()
     take: number;
 
     @IsOptional()
-    @IsNumber()
+    @IsNumberString()
     skip: number;
 
-    @IsNumber()
-    senderId: number;
-
-    @IsNumber()
+    @IsNumberString()
     receiverId: number
 }
