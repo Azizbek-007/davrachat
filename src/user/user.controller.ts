@@ -21,7 +21,7 @@ export class UserController {
   }
 
   @Get('search/:username')
-  search(
+  search( 
     @Param('username') username: string
   ){
     return this.userService.search(username);
