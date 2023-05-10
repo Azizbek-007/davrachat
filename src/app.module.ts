@@ -6,6 +6,7 @@ import { RedisModule } from './redis/redis.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { MessageModule } from './message/message.module';
 
 
 @Module({
@@ -29,6 +30,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     RedisModule,
     AuthModule,
     UserModule,
+    MessageModule,
   ],
   controllers: [],
 })

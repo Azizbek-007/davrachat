@@ -3,6 +3,8 @@ import { UserService } from './user.service';
 import UpdateUserDto from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from './entities/user.entity';
 
 @UseGuards(AuthGuard)
 @ApiTags('user')
@@ -10,12 +12,12 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Patch(':id')
+  @Patch()
   update(
-    @Param('id', ParseIntPipe) id: number, 
-    @Body() updateUserDto: UpdateUserDto
+    @Body() updateUserDto: UpdateUserDto,
+    @GetUser() user: User
   ) {
-    return this.userService.update(+id, updateUserDto);
+    return this.userService.update(user['id'], updateUserDto);
   }
 
   @Get('search/:username')
