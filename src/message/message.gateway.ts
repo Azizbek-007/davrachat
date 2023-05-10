@@ -34,6 +34,7 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
   }
   
   async handleDisconnect(socket: Socket) {
+    console.log("user disconnect")
     const token = socket.handshake.headers.authorization;
     try {
       const check = await this.jwtService.verifyAsync(token, { 
@@ -46,6 +47,7 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
   }
   
   async handleConnection(socket: Socket) {
+    console.log("user connect")
       const token = socket.handshake.headers.authorization;
       try {
         if(!token) {
