@@ -4,6 +4,7 @@ import UpdateUserDto from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository, ILike } from 'typeorm';
+import { PrivateMessage } from '../message/entities/message.entity'
 
 @Injectable()
 export class UserService {
@@ -37,6 +38,14 @@ export class UserService {
     this.userRepository.merge(user, updateUserDto);
 
     return this.userRepository.save(user);
+  }
+
+  async myFrineds(user_id: User['id']) {
+    const user = await this.userRepository.find({
+      where: [{
+        
+      }]
+    })
   }
 
   async search(username: string) {

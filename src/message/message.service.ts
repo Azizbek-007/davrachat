@@ -47,6 +47,29 @@ export class MessageService {
     return await msg.save();
   }
 
+  async myFriends(user_id: number) {
+    const friends = await this.privateMessageRepository.find({
+      where: [
+        {
+          senderId: user_id
+        }, {
+          receiverId: user_id
+        }
+      ],
+      
+    });
+    
+    const data = await this.privateMessageRepository
+    .createQueryBuilder()
+    .groupBy('senderId')
+    .addGroupBy('receiverId')
+    .getMany()
+    return data
+    // if(friends.length == 0) {
+    //   throw new NotFoundException("Friend not found")
+    // }
+    // return friends
+  }
 
   findOne(id: number) {
     return `This action returns a #${id} message`;
