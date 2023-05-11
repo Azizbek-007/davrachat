@@ -4,7 +4,6 @@ import { PrivateMessage } from "../entities/message.entity";
 import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateMsgDto  {
-
     @IsOptional()
     @IsString()
     text: string;

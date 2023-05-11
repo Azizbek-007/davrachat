@@ -98,7 +98,19 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
   @OnEvent('message.create')
   handleMessageCreateEvent(payload: any) {
     console.log(777, payload)
-    this.server.emit('recMessage', payload);
+    this.server.emit('onMessageSend', payload);
+  }
+
+  @OnEvent('message.delete')
+  handleMessageDeleteEvent(payload: any) {
+    console.log(777, payload)
+    this.server.emit('onMessageDelete', payload);
+  }
+
+  @OnEvent('message.update')
+  handleMessageUpdateEvent(payload: any) {
+    console.log(777, payload)
+    this.server.emit('onMessageUpdate', payload);
   }
     
 }

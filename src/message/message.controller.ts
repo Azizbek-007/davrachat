@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { MessageService } from './message.service';
 import { QueryFindMessageDto } from './dto/query-find.dto';
@@ -9,6 +9,7 @@ import { User } from 'src/user/entities/user.entity';
 import { CreateMsgDto } from './dto/create-message.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { S3Service } from 'src/s3/s3.service';
+import { FileStorage } from './file.staroge';
 
 @ApiTags('message')
 @UseGuards(AuthGuard)
@@ -28,9 +29,18 @@ export class MessageController {
   }
 
   @Post('/sendPhoto')
-  @UseInterceptors(FileInterceptor('image'))
-  async sendPhoto(@Body() body,  @GetUser() user) {
-    
+  @UseInterceptors(FileInterceptor('image', FileStorage))
+  async sendPhoto(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() dto,  
+    @GetUser() user
+  ) {
+    let aws_s3_location: string;
+    file ? (aws_s3_location = await this.s3Service.upload(file)) : null;
+    dto['image'] = aws_s3_location;
+    const dto_2 = { ...dto, senderId: user['sub'] };
+    this.eventEmitter.emit('message.create', dto_2);
+    return await this.messageService.CreateMessage(dto_2);
   }
 
 

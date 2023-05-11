@@ -1,8 +1,11 @@
 import { S3 } from 'aws-sdk';
 import { Injectable } from '@nestjs/common';
 
+console.log(process.env.AWS_BUCKED_NAME)
+ 
 @Injectable()
 export class S3Service {
+
   async upload(file: any) {
     const { originalname, mimetype } = file;
     const bucketS3 = process.env.AWS_BUCKED_NAME;
