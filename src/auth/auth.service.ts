@@ -26,7 +26,7 @@ export class AuthService {
     const timer = parseInt(process.env.SMTP_CODE_TTL);
     await this.redisService.set(dto['email'], code.toString(),  timer);
     throw new HttpException({ status: 200, message: "Code sended to user email", timer }, HttpStatus.OK);
-  }
+  } 
 
   async check(dto: CodeDto) {
     const isEmail = await this.redisService.get(dto['email']);
