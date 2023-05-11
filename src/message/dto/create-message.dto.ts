@@ -23,7 +23,4 @@ export class CreateMsgDto  {
 
     @IsNumber()
     receiverId: number;
-
-    @IsNumber()
-    senderId: number;
 } 

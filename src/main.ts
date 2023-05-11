@@ -21,7 +21,6 @@ async function bootstrap() {
   );
   app.setGlobalPrefix('/v1/api');
 
-
   const config = new DocumentBuilder()
     .setTitle('DAVRACHAT')
     .setDescription('The DAVRACHAT API description')

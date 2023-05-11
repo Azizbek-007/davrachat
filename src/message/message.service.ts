@@ -40,8 +40,7 @@ export class MessageService {
 
   async CreateMessage(dto: CreateMsgDto) {
     const msg = this.privateMessageRepository.create(dto);
-    const data = await msg.save();
-    console.log(data)
+    return await msg.save();
   }
 
 

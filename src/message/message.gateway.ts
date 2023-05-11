@@ -1,5 +1,6 @@
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
+import { OnEvent } from '@nestjs/event-emitter';
 import { MessageService } from './message.service';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
@@ -7,7 +8,10 @@ import { UserService } from 'src/user/user.service';
 import { CreateMsgDto } from './dto/create-message.dto';
 
 
-@WebSocketGateway(8081)
+  @WebSocketGateway(8081, {
+    pingInterval: 10000,
+    pingTimeout: 15000
+  })
 export default class MessageGateway  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect{
   constructor(
     private readonly messageService: MessageService,  
@@ -27,6 +31,25 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
     payload['senderId'] = check['sub']
     this.server.emit('recMessage', payload);
     await this.messageService.CreateMessage(payload)
+  }
+
+  @SubscribeMessage('deleteMessage')
+  async handleDeleteMessage(socket: Socket, payload: any) {
+
+  }
+
+  @SubscribeMessage('onTypingStart')
+  async onTypingStart(
+    @ConnectedSocket() client: Socket,
+  ) {
+    const token = client.handshake.headers.authorization;
+    const check = await this.jwtService.verifyAsync(token, { 
+      secret: process.env.JWT_SECRET
+    });
+    console.log('onTypingStart');
+    console.log(check['sub']);
+    console.log(client.rooms);
+    client.to(`conversation-${check['sub']}`).emit('onTypingStart');
   }
 
   afterInit(server: Server) {
@@ -70,6 +93,12 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
   private disconnect(socket: Socket) {
     socket.emit('Error', new UnauthorizedException());
     socket.disconnect();
+  }
+
+  @OnEvent('message.create')
+  handleMessageCreateEvent(payload: any) {
+    console.log(777, payload)
+    this.server.emit('recMessage', payload);
   }
     
 }

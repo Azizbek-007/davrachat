@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MessageModule } from './message/message.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { S3Module } from './s3/s3.module';
 
 
 @Module({
@@ -27,11 +29,13 @@ import { MessageModule } from './message/message.module';
       synchronize: true, // shouldn't be used in production - may lose data
       logging: false
     }),
+    EventEmitterModule.forRoot(),
     MailModule,
     RedisModule,
     AuthModule,
     UserModule,
     MessageModule,
+    S3Module,
   ],
   controllers: [],
 })

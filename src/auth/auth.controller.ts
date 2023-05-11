@@ -33,11 +33,11 @@ export class AuthController {
     return this.authService.getUser(req['user']['email'])
   }
 
-  @UseGuards(AuthGuard)
-  @Get('logout')
-  @HttpCode(204)
-  logout(@Headers('authorization') bearerToken: string) {
-    const token = bearerToken.split(' ')[1];
-    return this.authService.logout(token);
-  }
+  // @UseGuards(AuthGuard)
+  // @Get('logout')
+  // @HttpCode(204)
+  // logout(@Headers('authorization') bearerToken: string) {
+  //   const token = bearerToken.split(' ')[1];
+  //   return this.authService.logout(token);
+  // }
 }
