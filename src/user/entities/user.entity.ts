@@ -21,10 +21,10 @@ export class User extends BaseEntity {
     @Column({ nullable: true })
     avatar: string;
 
-    @OneToMany(() => PrivateMessage, msg => msg.sender)
+    @OneToMany(() => PrivateMessage, msg => msg.sender, { createForeignKeyConstraints: true })
     sentMessages: PrivateMessage
 
-    @OneToMany(() => PrivateMessage, msg => msg.receiver)
+    @OneToMany(() => PrivateMessage, msg => msg.receiver, { createForeignKeyConstraints: true })
     receivedMessages: PrivateMessage
 
     @Column({ type: 'boolean', default: true })
