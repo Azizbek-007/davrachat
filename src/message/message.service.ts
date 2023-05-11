@@ -3,6 +3,7 @@ import {  QueryFindMessageDto } from './dto/query-find.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PrivateMessage } from './entities/message.entity';
 import { Repository } from 'typeorm';
+import { CreateMsgDto } from './dto/create-message.dto';
 
 @Injectable()
 export class MessageService {
@@ -12,13 +13,16 @@ export class MessageService {
   ) {}
 
   async findAll(query: QueryFindMessageDto, senderId: number) {
-    const take = query['take'] || 30
-    const skip = query['skip'] || 0
+    const take = query['take'] || 30;
+    const skip = query['skip'] || 0;
 
     const [result, total] = await this.privateMessageRepository.findAndCount(
         {
-          where: { senderId, receiverId: query['receiverId'] },
-          order: { id: "DESC" },
+          where: [
+            { senderId, receiverId: query['receiverId']}, 
+            { senderId: query['receiverId'], receiverId: senderId }
+          ],
+          order: { createdAt: "DESC" },
           take: take,
           skip: skip
         }
@@ -32,9 +36,15 @@ export class MessageService {
       data: result,
       count: total
     }
+  }
 
-  
-}
+  async CreateMessage(dto: CreateMsgDto) {
+    const msg = this.privateMessageRepository.create(dto);
+    const data = await msg.save();
+    console.log(data)
+  }
+
+
   findOne(id: number) {
     return `This action returns a #${id} message`;
   }

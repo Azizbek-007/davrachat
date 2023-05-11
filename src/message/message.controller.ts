@@ -13,8 +13,8 @@ export class MessageController {
   constructor(private readonly messageService: MessageService) {}
 
   @Get('user')
-  findAll(@Query() query: QueryFindMessageDto, @GetUser() user: User) {
-    return this.messageService.findAll(query, user['id']);
+  findAll(@Query() query: QueryFindMessageDto, @GetUser() user) {
+    return this.messageService.findAll(query, user['sub']);
   }
 
 }

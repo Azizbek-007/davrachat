@@ -25,6 +25,7 @@ import { MessageModule } from './message/message.module';
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
       synchronize: true, // shouldn't be used in production - may lose data
+      logging: false
     }),
     MailModule,
     RedisModule,

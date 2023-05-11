@@ -1,10 +1,10 @@
 import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { MessageService } from './message.service';
-import { PrivateMessage } from './entities/message.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
+import { CreateMsgDto } from './dto/create-message.dto';
 
 
 @WebSocketGateway(8081)
@@ -19,17 +19,18 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
   
   
   @SubscribeMessage('sendMessage')
-  async handleSendMessage(socket: Socket, payload: any): Promise<void> {
+  async handleSendMessage(socket: Socket, payload: CreateMsgDto): Promise<void> {
     const token = socket.handshake.headers.authorization;
     const check = await this.jwtService.verifyAsync(token, { 
       secret: process.env.JWT_SECRET
     });
-
-    this.server.emit('recMessage', {...payload, user_id: check['sub']});
+    payload['senderId'] = check['sub']
+    this.server.emit('recMessage', payload);
+    await this.messageService.CreateMessage(payload)
   }
 
   afterInit(server: Server) {
-    console.log(server);
+    // console.log(server);
     //Do stuffs
   }
   
