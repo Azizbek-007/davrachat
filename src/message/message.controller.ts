@@ -21,11 +21,16 @@ export class MessageController {
     ) {}
 
   @Post('/sendMessage')
-  @UseInterceptors(FileInterceptor('image'))
-  async createMessage (@Body() body: CreateMsgDto, @GetUser() user) {
+  async sendMessage (@Body() body: CreateMsgDto, @GetUser() user) {
     const dto = { ...body, senderId: user['sub'] }
     this.eventEmitter.emit('message.create', dto);
     return await this.messageService.CreateMessage(dto);
+  }
+
+  @Post('/sendPhoto')
+  @UseInterceptors(FileInterceptor('image'))
+  async sendPhoto(@Body() body,  @GetUser() user) {
+    
   }
 
 

@@ -18,6 +18,10 @@ export class MessageService {
 
     const [result, total] = await this.privateMessageRepository.findAndCount(
         {
+          relations: {
+            sender: true,
+            receiver: true
+          },
           where: [
             { senderId, receiverId: query['receiverId']}, 
             { senderId: query['receiverId'], receiverId: senderId }
