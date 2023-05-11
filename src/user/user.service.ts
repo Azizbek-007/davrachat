@@ -35,9 +35,8 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`There isn't any user with id: ${id}`)
     }
-    this.userRepository.merge(user, updateUserDto);
 
-    return this.userRepository.save(user);
+    return this.userRepository.update(user['id'], updateUserDto);
   }
 
   async myFrineds(user_id: User['id']) {

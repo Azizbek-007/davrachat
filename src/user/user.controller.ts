@@ -21,6 +21,7 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
     @GetUser() user: User
   ) {
+    console.log(updateUserDto)
     return this.userService.update(user['sub'], updateUserDto);
   }
 
