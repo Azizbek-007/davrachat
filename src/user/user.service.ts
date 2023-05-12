@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import UpdateUserDto from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -30,20 +30,30 @@ export class UserService {
     await this.userRepository.update(user_id, { status });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, dto: UpdateUserDto) {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
       throw new NotFoundException(`There isn't any user with id: ${id}`)
     }
-
-    return this.userRepository.update(user['id'], updateUserDto);
+    try {
+      this.userRepository.merge(user, dto);
+      const payload = await this.userRepository.save(user);
+      return { message: "successfully updated", payload }
+    } catch (error) {
+      throw new BadGatewayException();
+    }
   }
 
   async myFrineds(user_id: User['id']) {
     const user = await this.userRepository.find({
-      where: [{
-        
-      }]
+      where: [
+        {
+          
+        }
+      ]
+
+
+      
     })
   }
 
@@ -57,7 +67,7 @@ export class UserService {
     if(user.length == 0) {
       throw new NotFoundException();
     }
-    return user;
+    return {message: 'users are available', payload: user };
   }
 
   async getUserById (id: number) {
