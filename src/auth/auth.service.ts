@@ -16,7 +16,7 @@ export class AuthService {
     ) {}
 
 
-  async login(dto: LoginDto): Promise<void> {
+  async login(dto: LoginDto) {
     const isEmail = await this.redisService.get(dto['email']);
     if (isEmail != null) {
       throw new BadRequestException('You must wait 90 seconds to log in again');
@@ -25,7 +25,7 @@ export class AuthService {
     await this.appService.sendMail(dto['email'], code);
     const timer = parseInt(process.env.SMTP_CODE_TTL);
     await this.redisService.set(dto['email'], code.toString(),  timer);
-    throw new HttpException({ status: 200, message: "Code sended to user email", timer }, HttpStatus.OK);
+    return { status: 200, message: "Code sended to user email", timer };
   } 
 
   async check(dto: CodeDto) {

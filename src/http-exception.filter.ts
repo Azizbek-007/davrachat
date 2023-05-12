@@ -29,12 +29,13 @@ import {
       const request = ctx.getRequest<IncomingMessage>();
       const statusCode = getStatusCode<T>(exception);
       const message = getErrorMessage<T>(exception);
+      console.log( host.switchToHttp())
   
       response.status(statusCode).json({
         statusCode,
         message,
         timestamp: new Date().toISOString(),
-        path: request.url
+        path: request.url,
         
       });
     }
