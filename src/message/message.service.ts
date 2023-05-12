@@ -56,6 +56,7 @@ export class MessageService {
         receiver: true
       },
       select: {
+        text: true,
         senderId: true,
         receiverId: true
       },
@@ -75,11 +76,11 @@ export class MessageService {
     for await (const res of friends) {
       if(filtr.includes(res.receiverId) == false) {
         filtr.push(res.receiverId)
-        payload.push(res.receiver)
+        payload.push({ ...res.receiver, text: res.text})
       }
       if(filtr.includes(res.senderId) == false) {
         filtr.push(res.senderId)
-        payload.push(res.sender)
+        payload.push({ ...res.sender, text: res.text })
       }
     }
 
