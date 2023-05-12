@@ -9,6 +9,7 @@ import { MessageService } from 'src/message/message.service';
 import { FileStorage } from 'src/message/file.staroge';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { S3Service } from 'src/s3/s3.service';
+import { SearchDto } from './dto/search.dto';
 
 @UseGuards(AuthGuard)
 @ApiTags('user')
@@ -43,12 +44,11 @@ export class UserController {
   MyFriends (@GetUser() user: User) {
     return this.messageService.myFriends(user['sub']);
   }
-  
+
   @Get()
   search( 
-    @Query('search') username: string
+    @Query('search') dto: SearchDto
   ){
-    console.log(username)
-    return this.userService.search(username);
+    return this.userService.search(dto['username']);
   }
 }
