@@ -58,19 +58,15 @@ export class MessageService {
           receiverId: user_id
         }
       ],
-      
+      order: {
+        createdAt: "DESC"
+      }
     });
-    
-    const data = await this.privateMessageRepository
-    .createQueryBuilder()
-    .groupBy('senderId')
-    .addGroupBy('receiverId')
-    .getMany()
-    return data
-    // if(friends.length == 0) {
-    //   throw new NotFoundException("Friend not found")
-    // }
-    // return friends
+
+    if(friends.length == 0) {
+      throw new NotFoundException("Friend not found");
+    }
+    return { message: "Friends", payload: friends };
   }
 
   findOne(id: number) {
