@@ -51,6 +51,14 @@ export class MessageService {
 
   async myFriends(user_id: number) {
     const friends = await this.privateMessageRepository.find({
+      relations: {
+        sender: true,
+        receiver: true
+      },
+      select: {
+        senderId: true,
+        receiverId: true
+      },
       where: [
         {
           senderId: user_id
@@ -62,19 +70,23 @@ export class MessageService {
         createdAt: "DESC"
       }
     });
+    let filtr = [];
+    let payload = [];
+    for await (const res of friends) {
+      if(filtr.includes(res.receiverId) == false || filtr.includes(res.senderId) == false) {
+        filtr.push(res.receiverId ?? res.senderId)
+        payload.push(res.receiver ?? res.senderId)
+      }
+    }
 
     if(friends.length == 0) {
       throw new NotFoundException("Friend not found");
     }
-    return { message: "Friends", payload: friends };
+    return { message: "Friends", payload };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
-  }
+  async createGroup() {
 
-
-  remove(id: number) {
-    return `This action removes a #${id} message`;
   }
+  
 }
