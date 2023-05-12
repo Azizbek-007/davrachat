@@ -64,9 +64,6 @@ export class UserService {
       },
       take: 5
     });
-    if(user.length == 0) {
-      throw new NotFoundException();
-    }
     return {message: 'users are available', payload: user };
   }
 
