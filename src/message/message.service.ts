@@ -73,9 +73,13 @@ export class MessageService {
     let filtr = [];
     let payload = [];
     for await (const res of friends) {
-      if(filtr.includes(res.receiverId) == false || filtr.includes(res.senderId) == false) {
-        filtr.push(res.receiverId ?? res.senderId)
-        payload.push(res.receiver ?? res.senderId)
+      if(filtr.includes(res.receiverId) == false) {
+        filtr.push(res.receiverId)
+        payload.push(res.receiver)
+      }
+      if(filtr.includes(res.senderId) == false) {
+        filtr.push(res.senderId)
+        payload.push(res.sender)
       }
     }
 
