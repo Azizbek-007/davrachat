@@ -47,8 +47,8 @@ export class UserController {
 
   @Get()
   search( 
-    @Query('search') username: SearchDto
+    @Query('search') username: string
   ){
-    // return this.userService.search(username);
+    return this.userService.search(username);
   }
 }
