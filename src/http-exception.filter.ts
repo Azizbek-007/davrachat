@@ -16,9 +16,12 @@ import {
   };
   
   export const getErrorMessage = <T>(exception: T): string => {
-    return exception instanceof HttpException
-      ? Array.isArray(exception.message) ? exception.message[0] : exception.message
-      : String(exception);
+    if (exception instanceof HttpException){
+      console
+       return Array.isArray(exception.message) ? exception.message[0] : exception.message
+    }
+    console.log(exception)
+    return String(exception);
   };
 
   
