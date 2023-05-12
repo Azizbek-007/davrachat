@@ -34,7 +34,7 @@ export class UserController {
   @UseInterceptors(FileInterceptor('avatar', FileStorage))
   async SetAvatar(
     @UploadedFile() file: Express.Multer.File,
-    @GetUser() user
+    @GetUser() user: any
   ) {
     let aws_s3_location: string;
     file ? (aws_s3_location = await this.s3Service.upload(file)) : null;
@@ -47,8 +47,8 @@ export class UserController {
 
   @Get()
   search( 
-    @Query('search') dto
+    @Query('search') username: SearchDto
   ){
-    return this.userService.search(dto);
+    // return this.userService.search(username);
   }
 }

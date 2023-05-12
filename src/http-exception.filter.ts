@@ -14,14 +14,22 @@ import {
       ? exception.getStatus()
       : HttpStatus.INTERNAL_SERVER_ERROR;
   };
+
+  export interface HttpExceptionResponse {
+    statusCode: number;
+    message: any;
+    error: string;
+  }
   
-  export const getErrorMessage = <T>(exception: T): string => {
-    if (exception instanceof HttpException){
-      console
-       return Array.isArray(exception.message) ? exception.message[0] : exception.message
+  export const getErrorMessage = <T>(exception: T): any => {
+
+    if(exception instanceof HttpException) {
+      const errorResponse = exception.getResponse();
+      const errorMessage = (errorResponse as HttpExceptionResponse).message || exception.message;
+      return Array.isArray(errorMessage) ? errorMessage[0] : errorMessage;
+    } else {
+      return String(exception);
     }
-    console.log(exception)
-    return String(exception);
   };
 
   
