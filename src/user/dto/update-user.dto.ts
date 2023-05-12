@@ -22,9 +22,4 @@ export default class UpdateUserDto {
     @ApiProperty({ required: false })
     username: string;
 
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ required: false })
-    avatar: string;
-
 }
