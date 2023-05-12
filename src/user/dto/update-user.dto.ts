@@ -7,6 +7,7 @@ export default class UpdateUserDto {
     @ApiProperty()
     first_name: string;
 
+    @IsNotEmpty()
     @IsString()
     @IsOptional()
     @ApiProperty({ required: false })

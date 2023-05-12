@@ -17,9 +17,11 @@ import {
   
   export const getErrorMessage = <T>(exception: T): string => {
     return exception instanceof HttpException
-      ? exception.message
+      ? Array.isArray(exception.message) ? exception.message[0] : exception.message
       : String(exception);
   };
+
+  
   
   @Catch()
   export class GlobalExceptionFilter<T> implements ExceptionFilter {
@@ -29,7 +31,6 @@ import {
       const request = ctx.getRequest<IncomingMessage>();
       const statusCode = getStatusCode<T>(exception);
       const message = getErrorMessage<T>(exception);
-      console.log( host.switchToHttp())
   
       response.status(statusCode).json({
         statusCode,

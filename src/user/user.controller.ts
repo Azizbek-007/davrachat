@@ -1,4 +1,4 @@
-import { Controller, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, Post, Get, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, Post, Get, UseInterceptors, UploadedFile, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import UpdateUserDto from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -43,10 +43,12 @@ export class UserController {
   MyFriends (@GetUser() user: User) {
     return this.messageService.myFriends(user['sub']);
   }
-  @Get('search/:username')
+  
+  @Get()
   search( 
-    @Param('username') username: string
+    @Query('search') username: string
   ){
+    console.log(username)
     return this.userService.search(username);
   }
 }
