@@ -37,14 +37,16 @@ export class MessageService {
     }
 
     return {
-      data: result,
+      message: "messages are available",
+      payload: result,
       count: total
     }
   }
 
   async CreateMessage(dto: CreateMsgDto) {
     const msg = this.privateMessageRepository.create(dto);
-    return await msg.save();
+    const new_msg = await msg.save();
+    return { message: "message sent", payload: new_msg };
   }
 
   async myFriends(user_id: number) {
