@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HttpStatus, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { GlobalExceptionFilter } from './http-exception.filter';
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
@@ -11,6 +12,8 @@ async function bootstrap() {
     cors: true,
     bodyParser: true
   });
+
+  app.useGlobalFilters(new GlobalExceptionFilter());
   
   app.useGlobalPipes(
     new ValidationPipe({ 
@@ -19,6 +22,7 @@ async function bootstrap() {
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
     })
   );
+
   app.setGlobalPrefix('/v1/api');
 
   const config = new DocumentBuilder()
