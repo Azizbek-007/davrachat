@@ -57,8 +57,24 @@ export class MessageService {
       },
       select: {
         text: true,
+        image: true,
+        createdAt: true,
         senderId: true,
-        receiverId: true
+        receiverId: true,
+        sender: {
+          id: true,
+          first_name: true,
+          last_name: true,
+          avatar: true,
+          status: true
+        },
+        receiver: {
+          id: true,
+          first_name: true,
+          last_name: true,
+          avatar: true,
+          status: true
+        }
       },
       where: [
         {
@@ -76,11 +92,17 @@ export class MessageService {
     for await (const res of friends) {
       if(filtr.includes(res.receiverId) == false) {
         filtr.push(res.receiverId)
-        payload.push({ ...res.receiver, text: res.text})
+        payload.push({ ...res.receiver, message: {
+          text: res['text'],
+          createdAt: res['createdAt']
+        }});
       }
       if(filtr.includes(res.senderId) == false) {
         filtr.push(res.senderId)
-        payload.push({ ...res.sender, text: res.text })
+        payload.push({ ...res.sender, message: {
+          text: res['text'],
+          createdAt: res['createdAt']
+        }});
       }
     }
 
