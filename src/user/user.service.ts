@@ -1,4 +1,4 @@
-import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import UpdateUserDto from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -68,6 +68,18 @@ export class UserService {
       throw new NotFoundException();
     }
     return {message: 'users are available', payload: user };
+  }
+
+  async setAvatar (user_id: number, image_path: string) {
+    if(image_path == null) {
+      throw new BadRequestException();
+    }
+    const user = await this.userRepository.findOneBy({ id: user_id });
+    this.userRepository.merge(user, { 
+      avatar: image_path
+    });
+    const payload = await this.userRepository.save(user);
+    return { message: "image uploaded successfully", payload }
   }
 
   async getUserById (id: number) {
