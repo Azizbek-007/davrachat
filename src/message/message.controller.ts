@@ -24,8 +24,9 @@ export class MessageController {
   @Post('/sendMessage')
   async sendMessage (@Body() body: CreateMsgDto, @GetUser() user) {
     const dto = { ...body, senderId: user['sub'] }
+    const data = await this.messageService.CreateMessage(dto);
     this.eventEmitter.emit('message.create', dto);
-    return await this.messageService.CreateMessage(dto);
+    return data;
   }
 
   @Post('/sendPhoto')

@@ -40,9 +40,13 @@ export class MessageService {
   }
 
   async CreateMessage(dto: CreateMsgDto) {
-    const msg = this.privateMessageRepository.create(dto);
-    const new_msg = await msg.save();
-    return { message: "message sent", payload: new_msg };
+    try {
+      const msg = this.privateMessageRepository.create(dto);
+      const new_msg = await msg.save();
+      return { message: "message sent", payload: new_msg }; 
+    } catch (error) {
+      throw new NotFoundException("Receiver not found");
+    }
   }
 
   async myFriends(user_id: number): Promise<{ message: string; payload: any[]; }> {
