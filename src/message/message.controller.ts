@@ -36,6 +36,8 @@ export class MessageController {
     @Body() dto,  
     @GetUser() user
   ) {
+
+    console.log(file)
     let aws_s3_location: string;
     file ? (aws_s3_location = await this.s3Service.upload(file)) : null;
     dto['image'] = aws_s3_location;

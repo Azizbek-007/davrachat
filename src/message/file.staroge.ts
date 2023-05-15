@@ -7,7 +7,7 @@ export const FileStorage = {
     },
 
     fileFilter: (req: any, file: any, cb: any) => {
-
+      console.log(file)
       if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
         const image_format = String(file.mimetype).split('/')[1];
         file.originalname = Date.now() + '.' +image_format;

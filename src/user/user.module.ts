@@ -6,9 +6,10 @@ import { User } from './entities/user.entity';
 import { PrivateMessage } from '../message/entities/message.entity';
 import { MessageService } from 'src/message/message.service';
 import { S3Service } from 'src/s3/s3.service';
+import { Group } from 'src/group/entities/group.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ User, PrivateMessage ])],
+  imports: [TypeOrmModule.forFeature([ User, PrivateMessage, Group ])],
   controllers: [UserController],
   providers: [UserService, MessageService, S3Service]
 })

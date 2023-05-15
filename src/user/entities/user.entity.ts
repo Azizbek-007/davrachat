@@ -1,5 +1,6 @@
+import { Group } from "src/group/entities/group.entity";
 import { PrivateMessage } from "src/message/entities/message.entity";
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -29,6 +30,9 @@ export class User extends BaseEntity {
 
     @OneToMany(() => PrivateMessage, msg => msg.receiver)
     receivedMessages: PrivateMessage
+
+    @ManyToOne(() => Group, (group) => group.author)
+    myGroup: Group;
 
     @Column({ type: 'boolean', default: true })
     status: boolean;
