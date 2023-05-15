@@ -1,18 +1,19 @@
-# Asosiy ima'gimizni tanlaymiz
-FROM node:18
+# Ma'lumotlar uchun bazaviy Docker image ni olish
+FROM node:14
 
-# Ish kunimizni joylash uchun direktoriya yaratamiz
-WORKDIR /app
+# Konteyner uchun kerakli papkalar / papkalarni yaratish
+RUN mkdir -p /usr/src/app
 
-# Kerakli modullarni kochirib olish
+# Ilovalar uchun papkani ishchi katalog sifatida tanlang
+WORKDIR /usr/src/app
+
+# Paketlar kiritiladi
 COPY package*.json ./
 RUN npm install
 
-# Qolgan barcha fayllarni konteynerga ko'chirib olish
+# Ilgari ishlab chiqilgan kodlar kiritiladi
 COPY . .
 
-# Portni ochamiz
+# Konteynerni ishga tushirish buyruqlari
 EXPOSE 3000
-
-# Ishga tushuramiz
-CMD ["npm", "run", "start:prod"]
+CMD [ "npm", "run", "start:dev" ]

@@ -9,6 +9,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { MessageModule } from './message/message.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { S3Module } from './s3/s3.module';
+import { GroupModule } from './group/group.module';
 
 
 @Module({
@@ -36,6 +37,7 @@ import { S3Module } from './s3/s3.module';
     UserModule,
     MessageModule,
     S3Module,
+    GroupModule,
   ],
   controllers: [],
 })

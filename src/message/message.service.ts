@@ -32,10 +32,6 @@ export class MessageService {
         }
     );
 
-    if (result.length == 0)  {
-      throw new NotFoundException("There are no messages in this chat");
-    }
-
     return {
       message: "messages are available",
       payload: result,
@@ -49,7 +45,7 @@ export class MessageService {
     return { message: "message sent", payload: new_msg };
   }
 
-  async myFriends(user_id: number) {
+  async myFriends(user_id: number): Promise<{ message: string; payload: any[]; }> {
     const friends = await this.privateMessageRepository.find({
       relations: {
         sender: true,
@@ -106,9 +102,6 @@ export class MessageService {
       }
     }
 
-    if(friends.length == 0) {
-      throw new NotFoundException("Friend not found");
-    }
     return { message: "Friends", payload };
   }
 

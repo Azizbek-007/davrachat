@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'verbose', 'warn'],
     cors: true,
-    bodyParser: true
+    bodyParser: true 
   });
 
   app.useGlobalFilters(new GlobalExceptionFilter());
