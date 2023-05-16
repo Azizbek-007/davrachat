@@ -59,9 +59,14 @@ export class UserService {
 
   async search(username: string) {
     const user = await this.userRepository.find({
-      where: {
-        username: ILike(username + '%')
-      },
+      where: [
+        {
+          username: ILike(username + '%')
+        },
+        {
+          email: ILike(username + '%')
+        }
+      ],
       take: 5
     });
     return {message: 'users are available', payload: user };
