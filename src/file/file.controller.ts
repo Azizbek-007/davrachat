@@ -14,7 +14,7 @@ export class FileController {
     const fileSize = stat.size;
 
     const range = response.req.headers.range;
-    const CHUNK_SIZE = 10 ** 6; // 1 MB
+    const CHUNK_SIZE = 10 ** 8; // 1 MB
     const start = Number((range || '').replace(/bytes=/, '').split('-')[0]);
     const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
 
