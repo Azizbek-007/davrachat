@@ -10,6 +10,7 @@ import { MessageModule } from './message/message.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { S3Module } from './s3/s3.module';
 import { GroupModule } from './group/group.module';
+import { FileModule } from './file/file.module';
 
 
 @Module({
@@ -38,6 +39,7 @@ import { GroupModule } from './group/group.module';
     MessageModule,
     S3Module,
     GroupModule,
+    FileModule,
   ],
   controllers: [],
 })
