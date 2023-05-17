@@ -14,7 +14,7 @@ export class FileController {
     const fileSize = stat.size;
 
     const range = response.req.headers.range;
-    const CHUNK_SIZE = 10 ** 8; // 1 MB
+    const CHUNK_SIZE = 10 ** 6; // 1 MB
     const start = Number((range || '').replace(/bytes=/, '').split('-')[0]);
     const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
 
@@ -24,7 +24,8 @@ export class FileController {
       'Content-Range': `bytes ${start}-${end}/${fileSize}`,
       'Accept-Ranges': 'bytes',
       'Content-Length': contentLength,
-      'Content-Type': 'video/mp4'
+      'Content-Type': 'video/mp4',
+      'Cache-Control': 'max-age=604800, must-revalidate'
     });
 
     const stream = fs.createReadStream(videoPath, { start, end });
