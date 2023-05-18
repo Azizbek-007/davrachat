@@ -109,7 +109,7 @@ export class MessageService {
     }
 
     const desiredObj = await payload.find(item => item.id !== user_id);
-    return { message: "Friends", payload: desiredObj };
+    return { message: "Friends", payload: [...desiredObj] };
   }
 
   async createGroup() {
