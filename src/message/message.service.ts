@@ -84,7 +84,7 @@ export class MessageService {
         }
       ],
       order: {
-        createdAt: "DESC"
+        createdAt: "ASC"
       }
     });
     let filtr = [];
@@ -117,14 +117,3 @@ export class MessageService {
   }
   
 }
-
-
-const obj = [
-  {
-    id: 1,
-    a: "ok"
-  }, {
-    id: 2,
-    a: "no"
-  }
-]
