@@ -19,7 +19,7 @@ export class AuthService {
   async login(dto: LoginDto) {
     const isEmail = await this.redisService.get(dto['email']);
     if (isEmail != null) {
-      throw new BadRequestException('You must wait 90 seconds to log in again');
+      throw new BadRequestException(`You must wait ${process.env.SMTP_CODE_TTL} seconds to log in again`);
     }
     const code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     await this.appService.sendMail(dto['email'], code);
