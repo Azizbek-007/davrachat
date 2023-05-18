@@ -33,4 +33,9 @@ export class FileController {
     stream.on('open', () => stream.pipe(response));
     stream.on('error', (streamErr) => response.end(streamErr));
   }
+
+  @Get('/test')
+  asa() {
+    return 'ok'
+  }
 }
