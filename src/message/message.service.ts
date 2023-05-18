@@ -49,7 +49,7 @@ export class MessageService {
     }
   }
 
-  async myFriends(user_id: number): Promise<{ message: string; payload: any[]; }> {
+  async myFriends(user_id: number) {
     const friends = await this.privateMessageRepository.find({
       relations: {
         sender: true,
@@ -87,6 +87,7 @@ export class MessageService {
         createdAt: "ASC"
       }
     });
+    return friends;
     let filtr = [];
     let payload = [];
     for await (const res of friends) {
