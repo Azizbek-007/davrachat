@@ -108,7 +108,7 @@ export class MessageService {
       }
     }
 
-    const desiredObj = await payload.find(item => item.id === user_id);
+    const desiredObj = await payload.find(item => item.id !== user_id);
     return { message: "Friends", payload: desiredObj };
   }
 
