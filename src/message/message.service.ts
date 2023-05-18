@@ -26,7 +26,7 @@ export class MessageService {
             { senderId, receiverId: query['receiverId']}, 
             { senderId: query['receiverId'], receiverId: senderId }
           ],
-          order: { createdAt: "DESC" },
+          order: { createdAt: "ASC" },
           take: take,
           skip: skip
         }
@@ -49,7 +49,7 @@ export class MessageService {
     }
   }
 
-  async myFriends(user_id: number) {
+  async myFriends(user_id: number): Promise<{ message: string; payload: any[]; }> {
     const friends = await this.privateMessageRepository.find({
       relations: {
         sender: true,
@@ -84,10 +84,9 @@ export class MessageService {
         }
       ],
       order: {
-        createdAt: "ASC"
+        createdAt: "DESC"
       }
     });
-    return friends;
     let filtr = [];
     let payload = [];
     for await (const res of friends) {
