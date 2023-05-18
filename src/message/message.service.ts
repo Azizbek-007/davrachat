@@ -92,10 +92,12 @@ export class MessageService {
     for await (const res of friends) {
       if(filtr.includes(res.receiverId) == false) {
         filtr.push(res.receiverId)
+
         payload.push({ ...res.receiver, message: {
           text: res['text'],
           createdAt: res['createdAt']
         }});
+
       }
       if(filtr.includes(res.senderId) == false) {
         filtr.push(res.senderId)
@@ -106,7 +108,8 @@ export class MessageService {
       }
     }
 
-    return { message: "Friends", payload };
+    const desiredObj = await payload.find(item => item.id === user_id);
+    return { message: "Friends", payload: desiredObj };
   }
 
   async createGroup() {
@@ -114,3 +117,14 @@ export class MessageService {
   }
   
 }
+
+
+const obj = [
+  {
+    id: 1,
+    a: "ok"
+  }, {
+    id: 2,
+    a: "no"
+  }
+]
