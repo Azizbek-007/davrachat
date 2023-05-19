@@ -10,7 +10,8 @@ import { CreateMsgDto } from './dto/create-message.dto';
 
   @WebSocketGateway(11111, {
     pingInterval: 10000,
-    pingTimeout: 15000
+    pingTimeout: 15000,
+    cors: true
   })
 export default class MessageGateway  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect{
   constructor(
