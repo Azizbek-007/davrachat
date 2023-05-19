@@ -8,7 +8,7 @@ import { UserService } from 'src/user/user.service';
 import { CreateMsgDto } from './dto/create-message.dto';
 
 
-  @WebSocketGateway(8081, {
+  @WebSocketGateway(777777, {
     pingInterval: 10000,
     pingTimeout: 15000
   })
@@ -57,7 +57,7 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
     //Do stuffs
   }
   
-  async handleDisconnect(socket: Socket) {
+  async handleDisconnect(socket: Socket): Promise<void> {
     console.log("user disconnect")
     const token = socket.handshake.headers.authorization;
     try {
@@ -71,6 +71,7 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
   }
   
   async handleConnection(socket: Socket) {
+    socket
     console.log("user connect")
       const token = socket.handshake.headers.authorization;
       try {
