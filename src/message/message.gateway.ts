@@ -8,7 +8,7 @@ import { UserService } from 'src/user/user.service';
 import { CreateMsgDto } from './dto/create-message.dto';
 
 
-  @WebSocketGateway(777777, {
+  @WebSocketGateway(11111, {
     pingInterval: 10000,
     pingTimeout: 15000
   })
