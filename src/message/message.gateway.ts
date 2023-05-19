@@ -14,7 +14,7 @@ import { CreateMsgDto } from './dto/create-message.dto';
   })
 export default class MessageGateway  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect{
   constructor(
-    private readonly messageService: MessageService,  
+    private readonly messageService: MessageService,   
     private  jwtService: JwtService,
     private userService: UserService
     ) {}
