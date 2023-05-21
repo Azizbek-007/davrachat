@@ -3,6 +3,9 @@ import { AppModule } from './app.module';
 import { HttpStatus, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { GlobalExceptionFilter } from './http-exception.filter';
+// import { WsAdapter } from '@nestjs/platform-ws';
+import { IoAdapter } from '@nestjs/platform-socket.io';
+
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
@@ -13,6 +16,7 @@ async function bootstrap() {
     bodyParser: true 
   });
 
+  app.useWebSocketAdapter(new IoAdapter(app));
   app.useGlobalFilters(new GlobalExceptionFilter());
   
   app.useGlobalPipes(
