@@ -9,7 +9,7 @@ import { CreateMsgDto } from './dto/create-message.dto';
 
 
 @WebSocketGateway(11111, { 
-  transports: ['websocket'],
+  transports: ['polling'],
   cors: {
     origin: '*'
   } 
