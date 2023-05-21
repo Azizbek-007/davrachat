@@ -68,24 +68,23 @@ export default class MessageGateway  implements OnGatewayInit, OnGatewayConnecti
   }
   
   async handleConnection(socket: Socket) {
-    socket
     console.log("user connect")
-      const token = socket.handshake.headers.authorization;
-      try {
-        if(!token) {
-          return this.disconnect(socket);
-        }
-        const check = await this.jwtService.verifyAsync(token, { 
-          secret: process.env.JWT_SECRET
-        });
-        const user = await this.userService.getUserById(check['sub'])
-        if(!user) {
-          return this.disconnect(socket);
-        }
-        await this.userService.UserStatus(user['id'], true);
-    } catch (error) {
-      return this.disconnect(socket);
-    }
+    //   const token = socket.handshake.headers.authorization;
+    //   try {
+    //     if(!token) {
+    //       return this.disconnect(socket);
+    //     }
+    //     const check = await this.jwtService.verifyAsync(token, { 
+    //       secret: process.env.JWT_SECRET
+    //     });
+    //     const user = await this.userService.getUserById(check['sub'])
+    //     if(!user) {
+    //       return this.disconnect(socket);
+    //     }
+    //     await this.userService.UserStatus(user['id'], true);
+    // } catch (error) {
+    //   return this.disconnect(socket);
+    // }
   }
 
   private disconnect(socket: Socket) {
