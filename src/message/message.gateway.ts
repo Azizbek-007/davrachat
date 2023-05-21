@@ -8,9 +8,12 @@ import { UserService } from 'src/user/user.service';
 import { CreateMsgDto } from './dto/create-message.dto';
 
 
-@WebSocketGateway(11111, { cors: {
-  origin: '*'
-} })
+@WebSocketGateway(11111, { 
+  transports: ['websocket'],
+  cors: {
+    origin: '*'
+  } 
+})
 export default class MessageGateway  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect{
   constructor(
     private readonly messageService: MessageService,   
